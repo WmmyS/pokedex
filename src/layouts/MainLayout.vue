@@ -53,15 +53,15 @@ export default defineComponent({
         },
         {
           title: 'Pokedéx',
-          link: '/#/pokedex'
+          link: '/pokedex'
         },
         {
           title: 'Lendários',
-          link: '/#/lendarios'
+          link: '/lendarios'
         },
         {
           title: 'Documentação',
-          link: '/#/documentacao'
+          link: '/documentacao'
         }
       ]
     }
@@ -116,6 +116,10 @@ export default defineComponent({
     width: 80%;
     height: 100%;
     position: absolute;
+  }
+
+  .q-footer {
+    background-color: rgba(184, 175, 175, 0);
   }
 
   #footer {

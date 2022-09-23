@@ -4,16 +4,10 @@
       <div class="presentation">
         <h2><strong>Encontre</strong> todos os seus <strong>Pokémons</strong> favoritos</h2>
         <h4>Você pode conhecer o tipo do Pokémon, suas vantagens, fraquesas e abilidades</h4>
-       <!--  <q-btn class="q-px-xl q-py-md" style="background: green-14; color: white" label="Veja Pokémons" no-caps /> -->
         <q-btn class="q-px-xl q-py-md" style="background: #73D642; color: black; border-radius: 13px; font-size: 18px;" label="Veja Pokémons" no-caps />
       </div>
     </div>
-    <div>
-      <img class="bannerComplete"
-      alt="Pokémon logo"
-      src="~assets/BannerComplete.svg"
-      style="max-width: 880px; max-height: 780px;"
-      >
+    <div id="bannerBackground">
     </div>
   </q-page>
 </template>
@@ -57,7 +51,7 @@
     width: 55%;
     letter-spacing: 2px;
     line-height: 1.2;
-    backdrop-filter: blur(5px);
+    //backdrop-filter: blur(5px);
     border-radius: 10px;
   }
 
@@ -71,8 +65,15 @@
     border-radius: 10px;
   }
 
-  .seemore {
-    background-color: map-get($gradients , yellowGradient);
+  #bannerBackground {
+    background-image: url('../../../assets/banner.png');
+    background-position: top 60px right 0px;
+    width: 100%;
+    height: 780px;
+    margin-right: 0px;
+    margin-left: auto;
+    padding-top: 80px;
+    background-repeat: no-repeat;
   }
 
 </style>
