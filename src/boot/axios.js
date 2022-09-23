@@ -1,13 +1,36 @@
 import { boot } from 'quasar/wrappers'
 import axios from 'axios'
 
-// Be careful when using SSR for cross-request state pollution
-// due to creating a Singleton instance here;
-// If any client changes this (global) instance, it might be a
-// good idea to move this instance creation inside of the
-// "export default () => {}" function below (which runs individually
-// for each client)
-const api = axios.create({ baseURL: 'https://api.example.com' })
+const pokeHeaders = {
+  'Content-Type':'application/json',
+  'X-Method-Used':'graphiql',
+  'Access-Control-Allow-Origin': '*'
+}
+
+const apiheaders = {
+  'Content-Type':'application/json',
+  'Access-Control-Allow-Origin': '*'
+}
+
+const api = async function execute (isQuery) {
+  console.log(isQuery)
+  console.log(pokeHeaders)
+  console.log(apiheaders)
+  return axios.create({
+    baseURL: isQuery ? process.env.POKEAPI : process.env.API,
+    headers: isQuery ? pokeHeaders : apiheaders,
+
+    validateStatus: (status) => {
+      console.log(status)
+      if (status === 401) {
+        console.log('Erro ao acessar a API')
+      } else {
+        return status <= 550
+      }
+    }
+  })
+}
+
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
