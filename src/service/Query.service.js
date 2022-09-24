@@ -10,7 +10,7 @@ class QueryService {
 
   async get (query) {
     const instance = api(false)
-    const response = await instance.get('/pokemon/' + query, {})
+    const response = await instance.get('pokemon/' + query, {})
 
     return response;
   }

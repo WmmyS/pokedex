@@ -5,12 +5,13 @@ import { errorMessage } from "src/utils/messagens";
 class PokemonFinderController {
   async findPokemon (data) {
     try {
-      console.log('to aqui')
       const response = await queryService.get(data)
+      console.log(response)
       return response
 
     } catch (error) {
-      errorMessage(exceptions(error))
+      console.log(error)
+      errorMessage(error)
     }
   }
 }

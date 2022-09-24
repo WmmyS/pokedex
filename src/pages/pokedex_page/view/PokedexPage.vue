@@ -4,7 +4,7 @@
       <div style="width: 75%;">
         <div style="text-align: center;">
           <h4> 800 <strong>Pokémons</strong> para você escolher o seu favorito</h4>
-          <q-input rounded outlined v-model="text" label="Encontre seu pokémon ..." />
+          <q-input rounded outlined label="Encontre seu pokémon ..." />
         </div>
         <div class="q-mt-lg fit row wrap justify-between items-start content-start">
           <q-btn-dropdown dense label="Tipo">
@@ -31,10 +31,7 @@
         </div>
       </div>
     </div>
-
-
   </q-page>
-
 </template>
 <script>
   import { defineComponent } from 'vue'
@@ -71,11 +68,11 @@
   },
   methods: {
     getPokemonTypes: async function () {
-      return 'teste'
+      return await pokemonFinderController.findPokemon('ditto')
     }
   },
   async mounted () {
-    // await this.getPokemonTypes()
+    await this.getPokemonTypes()
   }
 })
 

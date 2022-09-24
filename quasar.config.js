@@ -54,10 +54,10 @@ module.exports = configure(function (ctx) {
 
       env: ctx.dev
       ? {
-        API: `https://pokeapi.co/api/v2/`,
+        API: `https://pokeapi.co/api/v2`,
         POKEAPI: `https://beta.pokeapi.co/graphql/v1beta`
       } : {
-        API: `https://pokeapi.co/api/v2/`,
+        API: `https://pokeapi.co/api/v2`,
         POKEAPI: `https://beta.pokeapi.co/graphql/v1beta`
       },
       // transpile: false,
