@@ -19,7 +19,7 @@ class PokemonFinderService {
           name: response.data.forms[0].name,
           attack: response.data.stats.find(data => data.stat.name === 'attack').base_stat,
           defense: response.data.stats.find(data => data.stat.name === 'defense').base_stat,
-          image: response.data.sprites.other.dream_world.front_default,
+          image: response.data.sprites.other.dream_world.front_default !== null ? response.data.sprites.other.dream_world.front_default : response.data.sprites.other['official-artwork'].front_default,
           types: types
         }
         pokemonCards.push(pokemonCard)
@@ -47,7 +47,7 @@ class PokemonFinderService {
             name: response.data.forms[0].name,
             attack: response.data.stats.find(data => data.stat.name === 'attack').base_stat,
             defense: response.data.stats.find(data => data.stat.name === 'defense').base_stat,
-            image: response.data.sprites.other.dream_world.front_default,
+            image: response.data.sprites.other.dream_world.front_default !== null ? response.data.sprites.other.dream_world.front_default : response.data.sprites.other['official-artwork'].front_default,
             types: types
           }
           pokemonCards.push(pokemonCard)
