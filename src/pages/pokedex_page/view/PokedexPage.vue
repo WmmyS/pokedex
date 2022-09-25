@@ -48,11 +48,12 @@
         </div>
         <div v-for="result in results" :key="result.image" class="cards-container">
           <q-card class="pokemon-cards">
-          <img :src="result.image">
+          <div class="card-image-arround" :style="result.color">
+            <img :src="result.image">
+          </div>
 
           <q-card-section>
-            <div class="text-h6">Our Changing Planet</div>
-            <div class="text-subtitle2">by John Doe</div>
+            <div class="text-h6">{{result.name}}</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
@@ -148,6 +149,10 @@ export default defineComponent({
 
 .pokemon-cards img{
   width: 150px
+}
+
+.card-image-arround {
+  // background-color: red;
 }
 
 </style>
