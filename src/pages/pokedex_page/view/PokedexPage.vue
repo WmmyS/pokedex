@@ -46,7 +46,7 @@
             </q-list>
           </q-btn-dropdown>
         </div>
-        <div v-for="result in results" :key="result.image" class="q-pa-lg row items-start">
+        <div v-for="result in results" :key="result.image" class="" style="">
           <q-card class="my-card">
           <div class="card-image-arround" :style="result.color">
             <img :src="result.image">
