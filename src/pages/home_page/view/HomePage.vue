@@ -4,7 +4,7 @@
       <div class="presentation">
         <h2><strong>Encontre</strong> todos os seus <strong>Pokémons</strong> favoritos</h2>
         <h4>Você pode conhecer o tipo do Pokémon, suas vantagens, fraquesas e abilidades</h4>
-        <q-btn class="q-px-xl q-py-md" style="background: #73D642; color: black; border-radius: 13px; font-size: 18px;" label="Veja Pokémons" no-caps />
+        <q-btn class="q-px-xl q-py-md" style="background: #73D642; color: black; border-radius: 13px; font-size: 18px;" label="Veja Pokémons" href="/pokedex" no-caps />
       </div>
     </div>
     <div id="bannerBackground">

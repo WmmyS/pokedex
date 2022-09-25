@@ -1,87 +1,153 @@
 <template>
   <q-page>
     <div class="row justify-center">
-      <div style="width: 75%;">
-        <div style="text-align: center;">
-          <h4> 800 <strong>Pokémons</strong> para você escolher o seu favorito</h4>
-          <q-input rounded outlined label="Encontre seu pokémon ..." />
+      <div style="width: 75%">
+        <div style="text-align: center">
+          <h4>
+            {{count}} <strong>Pokémons</strong> para você escolher o seu favorito
+          </h4>
+          <q-input rounded outlined label="Encontre seu pokémon ..." v-model="query" @keyup.enter="findPokemon" />
         </div>
-        <div class="q-mt-lg fit row wrap justify-between items-start content-start">
+        <div
+          class="q-mt-lg row  justify-around items-start content-start"
+
+        >
           <q-btn-dropdown dense label="Tipo">
             <q-list>
-              <q-item v-close-popup v-for="item in types" :key="item.title">
-                <q-checkbox v-model="selection" val="teal" :label="item.title" color="teal" />
+              <q-item v-close-popup v-for="type in types" :key="type.label">
+                <q-checkbox
+                  v-model="type.value"
+                  :label="type.label"
+                  color="gray"
+                />
               </q-item>
             </q-list>
           </q-btn-dropdown>
-          <q-btn-dropdown dense label="Ataque">
+          <q-btn-dropdown dense label="Geração">
             <q-list>
-              <q-item v-close-popup v-for="item in types" :key="item.title">
-                <q-checkbox v-model="selection" val="teal" :label="item.title" color="teal" />
+              <q-item v-close-popup v-for="generation in generations" :key="generation.label">
+                <q-checkbox
+                  v-model="generation.value"
+                  :label="generation.label"
+                  color="gray"
+                />
               </q-item>
             </q-list>
           </q-btn-dropdown>
           <q-btn-dropdown dense label="Experiência">
             <q-list>
               <q-item v-close-popup v-for="item in types" :key="item.title">
-                <q-checkbox v-model="selection" val="teal" :label="item.title" color="teal" />
+                <q-checkbox
+                  v-model="selection"
+                  :label="item.title"
+                  color="teal"
+                />
               </q-item>
             </q-list>
           </q-btn-dropdown>
+        </div>
+        <div v-for="result in results" :key="result.image" class="cards-container">
+          <q-card class="pokemon-cards">
+          <img :src="result.image">
+
+          <q-card-section>
+            <div class="text-h6">Our Changing Planet</div>
+            <div class="text-subtitle2">by John Doe</div>
+          </q-card-section>
+
+          <q-card-section class="q-pt-none">
+            {{result}}
+          </q-card-section>
+        </q-card>
+
         </div>
       </div>
     </div>
   </q-page>
 </template>
 <script>
-  import { defineComponent } from 'vue'
-  import { ref } from 'vue'
-  import pokemonTypeController from '../../../controllers/PokemonTypeController'
-  import pokemonFinderController from '../../../controllers/PokemonFinderController'
+import { defineComponent } from 'vue';
+import pokemonAspectsService from '../../../service/pokemon.aspects.service'
+import pokemonFinderService from '../../../service/pokemon.finder.service'
+import { animatedCounter } from '../../../tools/animatedCounter'
+import { showLoading, hideLoading } from '../../../utils/loading'
 
-
-  export default defineComponent({
+export default defineComponent({
   name: 'PokedexPage',
-  data () {
+  data() {
     return {
-      teste: 'elétrico',
-      testeArray: ['normal', 'fogo'],
-      types: [
-        {
-          title: 'Fire',
-          selected: ''
-        },
-        {
-          title: 'Normal',
-          selected: ''
-        },
-        {
-          title: 'Eletric',
-          selected: ''
-        }
-      ]
-    }
+      query: '',
+      types: [],
+      generations: [],
+      results: [],
+      count: 0
+    };
   },
-  setup () {
-    return {
-    }
+  setup() {
+    return {};
   },
   methods: {
     getPokemonTypes: async function () {
-      return await pokemonFinderController.findPokemon('ditto')
+      const result = await pokemonAspectsService.getAllPokemonTypes()
+      result.forEach((data) => {
+        this.types.push({
+          label: data,
+          value: false,
+        })
+      })
+    },
+    getPokemonGenerations: async function () {
+      const result = await pokemonAspectsService.getAllPokemonGenerations()
+      result.forEach((data) => {
+        this.generations.push({
+          label: data,
+          value: false,
+        })
+      })
+    },
+    setPokemonsCount: async function () {
+      this.count = await pokemonAspectsService.getAllPokemonsCount()
+      animatedCounter(this.count)
+    },
+    findPokemon: async function () {
+      const result = await pokemonFinderService.findPokemon('', this.query)
+      this.results = result
+      this.query = ''
+    },
+    getRandomPokemons: async function (count) {
+      this.results = await pokemonFinderService.getRandomPokemons(count, 9);
+    },
+    getPokemonFromApi: async function () {
+      const response = await api(false).get(`pokemon/ditto`)
+      this.results = response
+    },
+    getPokemonFromAxios: async function () {
+      this.count = await this.$axios.get('https://pokeapi.co/api/v2/pokemon/pikachu')
     }
   },
-  async mounted () {
-    await this.getPokemonTypes()
-  }
-})
-
+  async mounted() {
+    showLoading()
+    await this.setPokemonsCount();
+    await this.getRandomPokemons(this.count);
+    await this.getPokemonTypes();
+    await this.getPokemonGenerations();
+    hideLoading()
+  },
+});
 </script>
 <style lang="scss">
-  @import '../../../css/quasar.variables.scss';
+@import '../../../css/quasar.variables.scss';
 
-  .q-page {
-    background-image: map-get($gradients , greyGradient);
-  }
+.q-page {
+  background-image: map-get($gradients, greyGradient);
+}
+
+.cards-container {
+  margin-top: 50px;
+}
+
+.pokemon-cards img{
+  width: 150px
+}
 
 </style>

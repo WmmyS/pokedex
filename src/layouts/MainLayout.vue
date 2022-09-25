@@ -119,7 +119,7 @@ export default defineComponent({
   }
 
   .q-footer {
-    background-color: rgba(184, 175, 175, 0);
+    background-color: $primary;
   }
 
   #footer {
