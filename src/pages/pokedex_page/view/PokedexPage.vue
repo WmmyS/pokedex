@@ -46,8 +46,8 @@
             </q-list>
           </q-btn-dropdown>
         </div>
-        <div v-for="result in results" :key="result.image" class="cards-container">
-          <q-card class="pokemon-cards">
+        <div v-for="result in results" :key="result.image" class="q-pa-lg row items-start">
+          <q-card class="my-card">
           <div class="card-image-arround" :style="result.color">
             <img :src="result.image">
           </div>
@@ -111,9 +111,16 @@ export default defineComponent({
       animatedCounter(this.count)
     },
     findPokemon: async function () {
-      const result = await pokemonFinderService.findPokemon('', this.query)
-      this.results = result
-      this.query = ''
+      try {
+        showLoading()
+        const result = await pokemonFinderService.findPokemon('', this.query)
+        hideLoading()
+        this.results = result
+      } catch (error) {
+        hideLoading()
+        this.query = ''
+      }
+
     },
     getRandomPokemons: async function (count) {
       this.results = await pokemonFinderService.getRandomPokemons(count, 9);
@@ -150,6 +157,12 @@ export default defineComponent({
 .pokemon-cards img{
   width: 150px
 }
+
+.my-card {
+  width: 30%;
+  max-width: 250px;
+}
+
 
 .card-image-arround {
   // background-color: red;
