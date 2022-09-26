@@ -46,21 +46,22 @@
             </q-list>
           </q-btn-dropdown>
         </div>
-        <div v-for="result in results" :key="result.image" class="" style="">
-          <q-card class="my-card">
-          <div class="card-image-arround" :style="result.color">
-            <img :src="result.image">
+        <div class="q-pa-md row items-start q-gutter-md justify-between">
+          <div v-for="result in results" :key="result.image" class="" style="">
+            <q-card class="my-card">
+              <div class="card-image-arround" :style="result.color">
+                <div :style="{'background-image': 'url(' + result.image + ')', 'background-repeat': 'no-repeat', 'width': '100%', 'height': '100%', 'background-attachment': 'static', 'background-position': '50%', 'background-size':'contain'}"></div>
+              </div>
+
+              <q-card-section style="position:relative; float: left;">
+               <div class="text-h6">{{result.name}}</div>
+             </q-card-section>
+
+              <q-card-section class="q-pt-none">
+
+              </q-card-section>
+            </q-card>
           </div>
-
-          <q-card-section>
-            <div class="text-h6">{{result.name}}</div>
-          </q-card-section>
-
-          <q-card-section class="q-pt-none">
-            {{result}}
-          </q-card-section>
-        </q-card>
-
         </div>
       </div>
     </div>
@@ -123,7 +124,7 @@ export default defineComponent({
 
     },
     getRandomPokemons: async function (count) {
-      this.results = await pokemonFinderService.getRandomPokemons(count, 9);
+      this.results = await pokemonFinderService.getRandomPokemons(count, 8);
     },
     getPokemonFromApi: async function () {
       const response = await api(false).get(`pokemon/ditto`)
@@ -159,13 +160,17 @@ export default defineComponent({
 }
 
 .my-card {
-  width: 30%;
-  max-width: 250px;
+  width: 365px;
+  height: 160px;
+  background-image: map-get($gradients, greyGradient);
 }
 
 
 .card-image-arround {
-  // background-color: red;
+  width: 60%;
+  height: 160px;
+  position:relative;
+  float:right;
 }
 
 </style>
