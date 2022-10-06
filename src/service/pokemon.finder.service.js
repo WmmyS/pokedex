@@ -3,6 +3,7 @@ import { formatName, formatRomanNumbers } from 'src/tools/formatStrings'
 import { LocalStorage } from 'quasar'
 import { ajustColors } from '../tools/ajustColors'
 import pokemonAspectsService from './pokemon.aspects.service'
+import { ajustTypeColor } from 'src/tools/ajustTypeColor'
 
 class PokemonFinderService {
 
@@ -13,8 +14,12 @@ class PokemonFinderService {
       if (response.status === 200) {
         const pokemonCards = []
         const types = []
+        const typeColors = []
         response.data.types.forEach(element => {
-          types.push(element.type.name)
+          types.push({
+            name: element.type.name,
+            color: ajustTypeColor(element.type.name)
+          })
         });
 
         const specieColor = response.data.species.url.split('pokemon-species/')[1].replace('/', '')
@@ -25,7 +30,7 @@ class PokemonFinderService {
           attack: response.data.stats.find(data => data.stat.name === 'attack').base_stat,
           defense: response.data.stats.find(data => data.stat.name === 'defense').base_stat,
           image: response.data.sprites.other.dream_world.front_default !== null ? response.data.sprites.other.dream_world.front_default : response.data.sprites.other['official-artwork'].front_default,
-          types: types,
+          types:  types,
           color: {
             backgroundImage: `${ajustColors(pokemonColor)}`
           }
@@ -56,7 +61,10 @@ class PokemonFinderService {
         if (response.status === 200) {
           const types = []
           response.data.types.forEach(element => {
-            types.push(element.type.name)
+            types.push({
+                name: element.type.name,
+                color: ajustTypeColor(element.type.name)
+              })
           });
 
           const specieColor = response.data.species.url.split('pokemon-species/')[1].replace('/', '')

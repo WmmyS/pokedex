@@ -9,9 +9,7 @@
           <q-input rounded outlined label="Encontre seu pokémon ..." v-model="query" @keyup.enter="findPokemon" />
         </div>
         <div
-          class="q-mt-lg row  justify-around items-start content-start"
-
-        >
+          class="q-mt-lg row  justify-around items-start content-start">
           <q-btn-dropdown dense label="Tipo">
             <q-list>
               <q-item v-close-popup v-for="type in types" :key="type.label">
@@ -52,14 +50,24 @@
               <div class="card-image-arround" :style="result.color">
                 <div :style="{'background-image': 'url(' + result.image + ')', 'background-repeat': 'no-repeat', 'width': '100%', 'height': '100%', 'background-attachment': 'static', 'background-position': '50%', 'background-size':'contain'}"></div>
               </div>
-
-              <q-card-section style="position:relative; float: left;">
-               <div class="text-h6">{{result.name}}</div>
+              <q-card-section style="position:relative; float: left; text-align:center">
+               <div class="text-h6" style="position: absolute;">{{result.name}}</div>
              </q-card-section>
-
-              <q-card-section class="q-pt-none">
-
-              </q-card-section>
+              <div class="specificationContainer">
+                <div style="display: flex; justify-content:space-between; width: 100px;">
+                  <div style="text-align:center;">
+                  <div class="circle"> {{ result.attack }}</div>
+                  <p>Ataque</p>
+                </div>
+                <div style="text-align:center;">
+                  <div class="circle"> {{ result.defense }}</div>
+                  <p>Defesa</p>
+                  </div>
+                </div>
+                <div class="pokemonTypesContainer">
+                  <div class="pokemonType" v-for="type in result.types" :key="type" :style="{ backgroundColor: '#'+type.color }"> {{ type.name }}</div>
+                </div>
+              </div>
             </q-card>
           </div>
         </div>
@@ -165,12 +173,52 @@ export default defineComponent({
   background-image: map-get($gradients, greyGradient);
 }
 
-
 .card-image-arround {
-  width: 60%;
+  width: 65%;
   height: 160px;
   position:relative;
   float:right;
+}
+
+.circle {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: white;
+  border: 4px solid #212121;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pokemonType {
+  border-radius: 10px;
+  max-width:50px;
+  text-align: center;
+  min-width: 70px;
+}
+
+.pokemonTypesContainer {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 150px;
+    margin-top: -10px;
+}
+
+.specificationContainer {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 160px;
+  position:absolute;
+  margin-top: 55px;
+  margin-left: 10px;
 }
 
 </style>
