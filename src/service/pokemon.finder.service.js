@@ -4,6 +4,7 @@ import { LocalStorage } from 'quasar'
 import { ajustColors } from '../tools/ajustColors'
 import pokemonAspectsService from './pokemon.aspects.service'
 import { ajustTypeColor } from 'src/tools/ajustTypeColor'
+import { traduzirTypes } from 'src/tools/traduzirTypes'
 
 class PokemonFinderService {
 
@@ -17,7 +18,7 @@ class PokemonFinderService {
         const typeColors = []
         response.data.types.forEach(element => {
           types.push({
-            name: element.type.name,
+            name: traduzirTypes(element.type.name),
             color: ajustTypeColor(element.type.name)
           })
         });
@@ -38,11 +39,16 @@ class PokemonFinderService {
         pokemonCards.push(pokemonCard)
         return pokemonCards
       } else {
-        console.log('aqui 2')
-        LocalStorage.get.item('initalCards')
-        return
+        console.log('Pokemon não encontrado')
+        return LocalStorage.get.item('initalCards')
       }
     })
+    .catch(
+      async (error) => {
+        console.log(LocalStorage.get.item('initalCards'))
+        return LocalStorage.get.item('initalCards')
+      }
+    )
   }
 
   async getRandomPokemons (pokemonMaxCount, quantity) {
@@ -62,7 +68,7 @@ class PokemonFinderService {
           const types = []
           response.data.types.forEach(element => {
             types.push({
-                name: element.type.name,
+                name: traduzirTypes(element.type.name),
                 color: ajustTypeColor(element.type.name)
               })
           });

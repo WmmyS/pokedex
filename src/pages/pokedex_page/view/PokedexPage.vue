@@ -123,8 +123,12 @@ export default defineComponent({
       try {
         showLoading()
         const result = await pokemonFinderService.findPokemon('', this.query)
+        if (result.length == 0) {
+          this.results = await pokemonFinderService.getRandomPokemons(count, 8);
+        } else {
+          this.results = result
+        }
         hideLoading()
-        this.results = result
       } catch (error) {
         hideLoading()
         this.query = ''
