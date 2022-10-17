@@ -1,5 +1,7 @@
 # pokedex (pokedex)
 
+![image](https://user-images.githubusercontent.com/53191767/196076260-175b8234-aa3c-4bcd-8fde-b9f42a298505.png)
+
 A Quasar Project
 
 ## Install the dependencies
@@ -36,9 +38,6 @@ npm run format
 ```bash
 quasar build
 ```
-
-![image](https://user-images.githubusercontent.com/53191767/196076260-175b8234-aa3c-4bcd-8fde-b9f42a298505.png)
-
 
 ### Customize the configuration
 See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js).
